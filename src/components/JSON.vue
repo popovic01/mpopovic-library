@@ -8,6 +8,7 @@
       <p>Our <code>authors.json</code> contains an array of author objects.</p>
 
       <h3>Iterating through Arrays</h3>
+      <!-- Activity 6: Render a list containing author names and their birth years. Hint: Make use of the v-for directive to iterate through the array of authors. -->
       <ul>
         <li v-for="author in authors" :key="author.id">
           {{ author.name }} ({{ author.birthYear }})
@@ -37,9 +38,7 @@
       <h3>Finding in Arrays</h3>
       <p>
         Finding by property:
-        <span :style="{ color: textColor, fontWeight: fontWeight }">
-          {{ orwell?.name }}
-        </span>
+        {{ orwell?.name }}
       </p>
 
       <h3>Nested Arrays/Objects</h3>
@@ -120,6 +119,15 @@
     <section class="lab-section">
       <h2>Attribute, Class and Style Binding with <code>v-bind</code></h2>
       <p>Highlighting Specific Authors:</p>
+      <ul>
+        <li
+          v-for="author in authors"
+          :key="author.id"
+          :class="{ highlighted: author.name == 'George Orwell' }"
+        >
+          {{ author.name }}
+        </li>
+      </ul>
     </section>
   </div>
 </template>
@@ -127,12 +135,11 @@
 <script setup>
 import { ref, computed } from 'vue'
 
+// Activity 1: Import JSON files (authors.json and bookstores.json)
 import authors from '../../src/assets/json/authors.json'
 import bookstores from '../../src/assets/json/bookstores.json'
 
 const showMessage = ref(false)
-const textColor = ref('red')
-const fontWeight = ref(500)
 
 // Activity 2: Get authors born after 1850
 const modernAuthors = computed(() => authors.filter((author) => author.birthYear > 1850))
@@ -203,10 +210,16 @@ ul {
   list-style-type: none;
   padding: 0;
 }
+
 li {
   background-color: #f0f0f0;
   padding: 10px;
   margin: 5px 0;
   border-radius: 5px;
+}
+
+.highlighted {
+  color: red;
+  font-weight: 500;
 }
 </style>

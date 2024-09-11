@@ -16,8 +16,34 @@
           >
         </li>
         <li class="nav-item">
-          <button v-if="isLoggedIn" type="button" class="nav-link btn btn-link" @click="logout()">
+          <router-link v-if="!isLoggedIn" to="/Firelogin" class="nav-link" active-class="active"
+            >Firebase Login</router-link
+          >
+        </li>
+        <li class="nav-item">
+          <router-link v-if="!isLoggedIn" to="/Fireregister" class="nav-link" active-class="active"
+            >Firebase Register</router-link
+          >
+        </li>
+        <li class="nav-item">
+          <router-link to="/addbook" class="nav-link" active-class="active">Add Book</router-link>
+        </li>
+        <li class="nav-item">
+          <button
+            v-if="isLoggedIn && !isAdmin"
+            type="button"
+            class="nav-link btn btn-link"
+            @click="logout()"
+          >
             Logout
+          </button>
+          <button
+            v-if="isLoggedIn && isAdmin"
+            type="button"
+            class="nav-link btn btn-link"
+            @click="logout()"
+          >
+            Logout admin
           </button>
         </li>
       </ul>
@@ -27,17 +53,25 @@
 
 <script setup>
 import { useRouter } from 'vue-router'
+import { getAuth, signOut } from 'firebase/auth'
 
 const router = useRouter()
+const auth = getAuth()
 
-defineProps(['isLoggedIn'])
+defineProps(['isLoggedIn', 'isAdmin'])
 const emit = defineEmits(['logout'])
 
-// const isLoggedIn = ref(false)
-
 function logout() {
-  localStorage.setItem('isAuthenticated', false)
-  emit('logout')
-  router.push('/login')
+  signOut(auth)
+    .then(function () {
+      localStorage.setItem('isAuthenticated', false)
+      localStorage.setItem('isAdmin', false)
+      console.log('currentUser: ' + auth.currentUser)
+      emit('logout')
+      router.push('/login')
+    })
+    .catch(function (error) {
+      console.log(error)
+    })
 }
 </script>

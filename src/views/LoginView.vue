@@ -82,6 +82,7 @@ const submitForm = () => {
     formValidation.value.isPasswordCorrect
   ) {
     localStorage.setItem('isAuthenticated', true)
+    localStorage.setItem('isAuthenticated', true)
     emit('login')
     router.push('/')
     clearForm()

@@ -29,6 +29,11 @@
           <router-link to="/addbook" class="nav-link" active-class="active">Add Book</router-link>
         </li>
         <li class="nav-item">
+          <router-link to="/GetBookCountView" class="nav-link" active-class="active"
+            >Get Book Count</router-link
+          >
+        </li>
+        <li class="nav-item">
           <button
             v-if="isLoggedIn && !isAdmin"
             type="button"

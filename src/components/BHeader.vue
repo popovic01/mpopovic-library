@@ -34,6 +34,11 @@
           >
         </li>
         <li class="nav-item">
+          <router-link to="/WeatherCheck" class="nav-link" active-class="active"
+            >Get Weather</router-link
+          >
+        </li>
+        <li class="nav-item">
           <button
             v-if="isLoggedIn && !isAdmin"
             type="button"
